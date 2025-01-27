@@ -1,0 +1,6 @@
+.root {
+    -fx-background-color: rgba(255, 255, 255, 0.95); /* 半透明背景颜色 */
+    -fx-border-color: #ccc;                          /* 边框颜色 */
+    -fx-border-radius: 7;                            /* 圆角大小 */
+    -fx-padding: 3;                                  /* 内边距 */
+}
