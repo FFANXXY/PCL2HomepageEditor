@@ -120,10 +120,11 @@ public class AllController {
                 reloadChooseAssToAss();
                 Logger.info(AC_INFO,"已设置 " + chooseAss.getName() + " 的名称为" + chooseAss.getName());
 
-                refreshComboBoxes();
-                reloadMenu();
-                resetTab();
-                resetTab();
+                Platform.runLater(() -> {
+                    refreshComboBoxes();
+                    reloadMenu();
+                    resetTab();
+                });
             }
         });
 
@@ -373,7 +374,7 @@ public class AllController {
             if (index != -1) { // 确保找到了对应的 CardWith
                 ass.set("addForCardMenu- textItem.setOnAction",index, addTextBlock(associatedCardWith));
 
-                refreshComboBoxes();
+                Platform.runLater(AllController::refreshComboBoxes);
 
                 Debug();
 
@@ -391,13 +392,13 @@ public class AllController {
         Logger.addLog("AllController.addMenu","添加菜单:" + name);
 
         if(shouldReload) {
-            // 刷新
-            refreshComboBoxes();
-            reloadMenu();
-            resetTab();
+            Platform.runLater(() -> {
+                refreshComboBoxes();
+                reloadMenu();
+                resetTab();
+            });
         }
     }
-
 
     /**
      *
@@ -551,21 +552,20 @@ public class AllController {
                     }
                 }
 
-//                Logger.info(AC_INFO,"选择的组件： " + selected);
 
                 Logger.info(AC_INFO,"正在重置...");
 
                 // 设置标志位以防止再次触发监听器
                 isClearingSelection = true;
-                Platform.runLater(() -> {
-                            comboBox.getSelectionModel().clearSelection(); // 清除选择
+//                Platform.runLater(() -> {
+//                            comboBox.getSelectionModel().clearSelection(); // 清除选择
+//                             refreshComboBoxes();
+//                            SetComboboxText(comboBox,associatedCardWith.getCard().getName());
+//                        });
 
+                comboBox.getSelectionModel().clearSelection(); // 清除选择
+                SetComboboxText(comboBox,associatedCardWith.getCard().getName());
 
-                            Logger.info(AC_INFO,"正在刷新名称为:" + associatedCardWith.getCard().getName());
-                            comboBox.setPromptText(associatedCardWith.getCard().getName());
-
-                            refreshComboBoxes();
-                        });
                 isClearingSelection = false; // 恢复标志位
 
 
@@ -593,6 +593,10 @@ public class AllController {
                 "创建组件完成:" + "卡片名称：" + cardwith.getCard().getName() + "\n卡片组件：" + cardwith.getCard().getComponentsName());
 
         return cardwith;
+    }
+    private void SetComboboxText(ComboBox<String> comboBox,String text) {
+        comboBox.setPromptText(text);
+        Logger.info(AC_INFO,"正在刷新名称为:" + comboBox.getPromptText());
     }
 
     /**

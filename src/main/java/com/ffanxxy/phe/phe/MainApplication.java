@@ -65,6 +65,7 @@ public class MainApplication extends Application {
         // 设置场景和样式表
         Scene scene = new Scene(fxmlLoader.load(), 1080, 640);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("fillet.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         scene.setFill(Color.TRANSPARENT); // 设置场景背景透明
 
         // 设置窗口为无边框和透明背景
